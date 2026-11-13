@@ -17,7 +17,7 @@ const STORAGE_KEY = "veritas.settings.v1";
 
 export const DEFAULT_SETTINGS: BackendSettings = {
   cernpix: "https://source-falls-increasing-forge.trycloudflare.com/",
-  legalrag: "https://expects-answering-socket-universe.trycloudflare.com/docs",
+  legalrag: "https://refine-appears-lean-alpha.trycloudflare.com/",
   videorag: "https://windsor-geographical-perfectly-orbit.trycloudflare.com/",
 };
 
