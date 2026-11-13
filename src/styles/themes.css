@@ -1,0 +1,138 @@
+/* ============================================================
+   Per-tool palettes, scoped to a wrapper class so each tool page
+   keeps its look without bleeding into the rest of Veritas.
+   Light/dark is app-wide: src/lib/theme.tsx stamps `data-mode`
+   on <html>, and each palette's dark block keys off it.
+   ============================================================ */
+
+/* ---------- Legal RAG + VideoRAG — neutral + blue ----------
+   Same look as Deepfake Detection and the Upload page: Tailwind's
+   neutral scale with a blue accent. Light values mirror the Upload
+   page (neutral-50 ground, white cards, neutral-200 borders), dark
+   ones its neutral-950 / 900 / 800. Tokens keep the `--lr-` prefix
+   from Legal RAG, where they originated. */
+.theme-legalrag,
+.theme-videorag {
+  --lr-bg: #fafafa;
+  --lr-bg-elevated: #ffffff;
+  --lr-bg-subtle: #f5f5f5;
+  --lr-bg-overlay: #ffffff;
+  --lr-border: #e5e5e5;
+  --lr-border-strong: #d4d4d4;
+  --lr-text: #171717;
+  --lr-text-muted: #737373;
+  --lr-text-faint: #a3a3a3;
+
+  --lr-brand: #171717;
+  --lr-brand-strong: #262626;
+  --lr-brand-soft: #f5f5f5;
+  --lr-brand-contrast: #ffffff;
+
+  --lr-accent: #2563eb;
+  --lr-accent-soft: #eff6ff;
+
+  --lr-success: #047857;
+  --lr-success-soft: #ecfdf5;
+  --lr-warning: #b45309;
+  --lr-warning-soft: #fffbeb;
+  --lr-danger: #be123c;
+  --lr-danger-soft: #fff1f2;
+  --lr-info: #1d4ed8;
+  --lr-info-soft: #eff6ff;
+
+  /* Tailwind 3 silently drops opacity modifiers on var() colors
+     (`border-[var(--lr-danger)]/20` generates nothing), so the
+     translucent lines are derived here instead. */
+  --lr-accent-line: color-mix(in srgb, var(--lr-accent) 45%, transparent);
+  --lr-danger-line: color-mix(in srgb, var(--lr-danger) 30%, transparent);
+
+  background: var(--lr-bg);
+  color: var(--lr-text);
+}
+[data-mode="dark"] :is(.theme-legalrag, .theme-videorag) {
+  --lr-bg: #0a0a0a;
+  --lr-bg-elevated: #171717;
+  --lr-bg-subtle: #262626;
+  --lr-bg-overlay: #171717;
+  --lr-border: #262626;
+  --lr-border-strong: #404040;
+  --lr-text: #f5f5f5;
+  --lr-text-muted: #a3a3a3;
+  --lr-text-faint: #737373;
+
+  --lr-brand: #fafafa;
+  --lr-brand-strong: #e5e5e5;
+  --lr-brand-soft: #262626;
+  --lr-brand-contrast: #0a0a0a;
+
+  --lr-accent: #60a5fa;
+  --lr-accent-soft: rgba(59, 130, 246, 0.12);
+
+  --lr-success: #34d399;
+  --lr-success-soft: rgba(16, 185, 129, 0.12);
+  --lr-warning: #fbbf24;
+  --lr-warning-soft: rgba(245, 158, 11, 0.12);
+  --lr-danger: #fb7185;
+  --lr-danger-soft: rgba(244, 63, 94, 0.12);
+  --lr-info: #93c5fd;
+  --lr-info-soft: rgba(59, 130, 246, 0.12);
+}
+@keyframes lr-pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.lr-dot-pulse { animation: lr-pulse-dot 1.4s ease-in-out infinite; }
+
+/* Renders the hand-rolled markdown-lite HTML produced by
+   src/lib/videoragMarkdown.ts inside VideoRAG answer cards. */
+.theme-videorag .msg-markdown p { margin: 0 0 0.6em; }
+.theme-videorag .msg-markdown p:last-child { margin-bottom: 0; }
+.theme-videorag .msg-markdown ul { margin: 0.25em 0 0.75em; padding-left: 1.25em; list-style: disc; }
+.theme-videorag .msg-markdown li { margin-bottom: 0.25em; }
+.theme-videorag .msg-markdown .msg__heading {
+  font-size: 1em;
+  font-weight: 600;
+  margin: 0.85em 0 0.35em;
+  color: var(--lr-text);
+}
+.theme-videorag .msg-markdown code {
+  background: var(--lr-bg-subtle);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.88em;
+}
+.theme-videorag .msg-markdown strong { font-weight: 600; color: var(--lr-text); }
+.theme-videorag .msg-markdown .msg__timestamp {
+  display: inline-block;
+  background: var(--lr-accent-soft);
+  color: var(--lr-accent);
+  border-radius: 4px;
+  padding: 0.05em 0.4em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+/* ---------- CernPix — neutral gallery + blue accent ---------- */
+.theme-cernpix {
+  --cp-background: #ffffff;
+  --cp-foreground: #0a0a0a;
+  --cp-card: #ffffff;
+  --cp-muted: #f5f5f5;
+  --cp-muted-foreground: #737373;
+  --cp-border: #e5e5e5;
+  --cp-sidebar: #fafafa;
+
+  background: var(--cp-background);
+  color: var(--cp-foreground);
+}
+[data-mode="dark"] .theme-cernpix {
+  --cp-background: #171717;
+  --cp-foreground: #f5f5f5;
+  --cp-card: #262626;
+  --cp-muted: #262626;
+  --cp-muted-foreground: #a3a3a3;
+  --cp-border: rgba(255, 255, 255, 0.1);
+  --cp-sidebar: #171717;
+}
