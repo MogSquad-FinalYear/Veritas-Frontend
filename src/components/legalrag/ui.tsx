@@ -21,13 +21,6 @@ const DOT_CLASS: Record<Tone, string> = {
   neutral: "bg-[var(--lr-text-faint)]",
 };
 
-export function confidenceTone(confidence: string): Tone {
-  if (confidence === "high") return "success";
-  if (confidence === "medium") return "warning";
-  if (confidence === "low") return "danger";
-  return "neutral";
-}
-
 export function validityTone(validity: string): Tone {
   if (validity === "active") return "success";
   if (validity === "amended") return "warning";

@@ -180,7 +180,7 @@ export function VideoRagPage() {
             </div>
           ) : (
             <div className="flex-1 overflow-y-auto">
-              <div className="mx-auto flex max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6">
+              <div className="mx-auto flex max-w-5xl flex-col gap-5 px-4 py-6 sm:px-6">
                 {messages.map((m) => (
                   <MessageBubble key={m.id} message={m} base={base} onClipClick={setActiveClip} />
                 ))}

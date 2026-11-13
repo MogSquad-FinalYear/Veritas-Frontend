@@ -113,6 +113,108 @@
   font-size: 0.85em;
   font-weight: 500;
 }
+.theme-videorag .msg-markdown .msg__table-wrap {
+  margin: 0.8em 0 1em;
+  overflow-x: auto;
+  border: 1px solid var(--lr-border);
+  border-radius: 10px;
+}
+.theme-videorag .msg-markdown .msg__table {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.92em;
+}
+.theme-videorag .msg-markdown .msg__table th {
+  background: var(--lr-bg-subtle);
+  color: var(--lr-text);
+  font-size: 0.82em;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+.theme-videorag .msg-markdown .msg__table th,
+.theme-videorag .msg-markdown .msg__table td {
+  padding: 0.7em 0.85em;
+  vertical-align: top;
+  border-bottom: 1px solid var(--lr-border);
+}
+.theme-videorag .msg-markdown .msg__table td {
+  color: var(--lr-text-muted);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.theme-videorag .msg-markdown .msg__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.theme-videorag .msg-markdown .msg__table tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--lr-bg-subtle) 45%, transparent);
+}
+.theme-videorag .msg-markdown .msg__table th:first-child,
+.theme-videorag .msg-markdown .msg__table td:first-child {
+  width: 16%;
+  color: var(--lr-accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+}
+
+/* Legal RAG answer typography. The answer body is structured Markdown-lite
+   rather than a plain paragraph so generated emphasis remains readable. */
+.theme-legalrag .lr-markdown > p {
+  margin: 0 0 0.8rem;
+}
+.theme-legalrag .lr-markdown > p:last-child {
+  margin-bottom: 0;
+}
+.theme-legalrag .lr-markdown h2,
+.theme-legalrag .lr-markdown h3 {
+  color: var(--lr-text);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+.theme-legalrag .lr-markdown h2 {
+  margin: 0.15rem 0 0.45rem;
+  font-size: 1.08rem;
+  line-height: 1.45;
+}
+.theme-legalrag .lr-markdown h3 {
+  margin: 0.8rem 0 0.35rem;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+.theme-legalrag .lr-markdown ul,
+.theme-legalrag .lr-markdown ol {
+  margin: 0.2rem 0 0.85rem;
+  padding-left: 1.35rem;
+}
+.theme-legalrag .lr-markdown ul {
+  list-style: disc;
+}
+.theme-legalrag .lr-markdown ol {
+  list-style: decimal;
+}
+.theme-legalrag .lr-markdown li {
+  margin: 0.25rem 0;
+  padding-left: 0.2rem;
+}
+.theme-legalrag .lr-markdown li::marker {
+  color: var(--lr-accent);
+  font-weight: 600;
+}
+.theme-videorag .msg-markdown .msg__table th:nth-child(2),
+.theme-videorag .msg-markdown .msg__table td:nth-child(2) {
+  width: 16%;
+}
+.theme-videorag .msg-markdown .msg__table th:nth-child(3),
+.theme-videorag .msg-markdown .msg__table td:nth-child(3) {
+  width: 43%;
+}
+.theme-videorag .msg-markdown .msg__table th:nth-child(4),
+.theme-videorag .msg-markdown .msg__table td:nth-child(4) {
+  width: 25%;
+}
 
 /* ---------- CernPix — neutral gallery + blue accent ---------- */
 .theme-cernpix {

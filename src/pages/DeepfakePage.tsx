@@ -34,6 +34,7 @@ export function DeepfakePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [missingImageIds, setMissingImageIds] = useState<Set<string>>(() => new Set());
 
   async function refresh() {
     setIsLoading(true);
@@ -55,19 +56,33 @@ export function DeepfakePage() {
     () => buildGallery(base, detections),
     [base, detections],
   );
+  const availableUploadedImages = useMemo(
+    () => uploadedImages.filter((image) => !missingImageIds.has(image.id)),
+    [uploadedImages, missingImageIds],
+  );
+  const availableFolders = useMemo(
+    () =>
+      folders
+        .map((folder) => ({
+          ...folder,
+          children: folder.children.filter((image) => !missingImageIds.has(image.id)),
+        }))
+        .filter((folder) => folder.children.length > 0),
+    [folders, missingImageIds],
+  );
   const allImages = useMemo(
-    () => [...uploadedImages, ...folders.flatMap((f) => f.children)],
-    [uploadedImages, folders],
+    () => [...availableUploadedImages, ...availableFolders.flatMap((f) => f.children)],
+    [availableUploadedImages, availableFolders],
   );
   const flaggedImages = useMemo(() => allImages.filter((i) => i.flagged), [allImages]);
-  const selectedFolder = folders.find((f) => f.id === selectedFolderId) ?? null;
+  const selectedFolder = availableFolders.find((f) => f.id === selectedFolderId) ?? null;
 
   const visibleImages: GalleryImage[] = useMemo(() => {
     if (view === "flagged") return flaggedImages;
     if (selectedFolder) return selectedFolder.children;
     if (view === "all") return allImages;
-    return uploadedImages;
-  }, [view, selectedFolder, flaggedImages, allImages, uploadedImages]);
+    return availableUploadedImages;
+  }, [view, selectedFolder, flaggedImages, allImages, availableUploadedImages]);
 
   function selectFolder(id: string) {
     setSelectedFolderId(id);
@@ -75,6 +90,16 @@ export function DeepfakePage() {
   }
   function clearSelection() {
     setSelectedFolderId(null);
+  }
+
+  function handleMissingImage(imageId: string) {
+    setMissingImageIds((current) => {
+      if (current.has(imageId)) return current;
+      const next = new Set(current);
+      next.add(imageId);
+      return next;
+    });
+    if (selectedImageId === imageId) setSelectedImageId(null);
   }
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -204,7 +229,7 @@ export function DeepfakePage() {
 
             <div className="mt-4 grid gap-4 md:grid-cols-3">
               <StatCard label="Images" value={isLoading ? "…" : allImages.length} />
-              <StatCard label="Folders" value={isLoading ? "…" : folders.length} />
+              <StatCard label="Folders" value={isLoading ? "…" : availableFolders.length} />
               <StatCard
                 label="Flagged"
                 value={isLoading ? "…" : flaggedImages.length}
@@ -235,7 +260,7 @@ export function DeepfakePage() {
             </div>
 
             <div className="space-y-1.5">
-              {folders.map((f) => (
+              {availableFolders.map((f) => (
                 <button
                   key={f.id}
                   onClick={() => selectFolder(f.id)}
@@ -264,13 +289,13 @@ export function DeepfakePage() {
               )}
             </div>
 
-            {uploadedImages.length > 0 && !selectedFolderId && (
+            {availableUploadedImages.length > 0 && !selectedFolderId && (
               <div className="mt-4 rounded-xl border border-[var(--cp-border)] bg-[var(--cp-muted)]/20 p-3">
                 <p className="mb-2 text-xs font-medium text-[var(--cp-muted-foreground)]">
                   Unfiled images
                 </p>
                 <div className="space-y-1">
-                  {uploadedImages.slice(0, 6).map((img) => (
+                  {availableUploadedImages.slice(0, 6).map((img) => (
                     <button
                       key={img.id}
                       onClick={() => {
@@ -322,6 +347,7 @@ export function DeepfakePage() {
                     image={img}
                     selected={img.id === selectedImageId}
                     onSelect={() => setSelectedImageId(img.id)}
+                    onMissing={() => handleMissingImage(img.id)}
                   />
                 ))}
               </div>
@@ -362,10 +388,12 @@ function Tile({
   image,
   selected,
   onSelect,
+  onMissing,
 }: {
   image: GalleryImage;
   selected: boolean;
   onSelect: () => void;
+  onMissing: () => void;
 }) {
   return (
     <button
@@ -379,6 +407,7 @@ function Tile({
           src={image.path}
           alt={image.name}
           loading="eager"
+          onError={onMissing}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
         {image.flagged && (

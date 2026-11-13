@@ -141,7 +141,7 @@ function AssistantBubble({
   return (
     <div className="flex items-start gap-2.5">
       <Avatar />
-      <div className="animate-fade-in min-w-0 max-w-[88%] rounded-2xl rounded-tl-sm border border-[var(--lr-border)] bg-[var(--lr-bg-elevated)] p-4 shadow-sm sm:p-5">
+      <div className="animate-fade-in min-w-0 max-w-[96%] rounded-2xl rounded-tl-sm border border-[var(--lr-border)] bg-[var(--lr-bg-elevated)] p-4 shadow-sm sm:p-5">
         <div className="mb-2.5 flex flex-wrap items-center gap-1.5">
           {response.citations.length > 0 && (
             <LrBadge tone={verifiedCount === response.citations.length ? "success" : "warning"} dot>

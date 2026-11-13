@@ -16,9 +16,9 @@ export interface BackendSettings {
 const STORAGE_KEY = "veritas.settings.v1";
 
 export const DEFAULT_SETTINGS: BackendSettings = {
-  cernpix: "http://localhost:8010",
-  legalrag: "http://localhost:8000",
-  videorag: "http://localhost:8001",
+  cernpix: "https://source-falls-increasing-forge.trycloudflare.com/",
+  legalrag: "https://expects-answering-socket-universe.trycloudflare.com/docs",
+  videorag: "https://windsor-geographical-perfectly-orbit.trycloudflare.com/",
 };
 
 function normalizeUrl(url: string): string {
